@@ -2,6 +2,10 @@
 
 React wrapper for mapbox-gl-geocoder for use with react-map-gl.
 
+## Demo
+
+https://codesandbox.io/s/vv29y730q3
+
 ## Installation
 NPM
 ```
