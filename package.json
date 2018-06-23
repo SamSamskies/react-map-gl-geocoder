@@ -1,0 +1,38 @@
+{
+  "name": "react-map-gl-geocoder",
+  "version": "1.0.0",
+  "description": "React wrapper for mapbox-gl-geocoder for use with react-map-gl",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "babel src --out-dir dist --source-maps inline",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:SamSamskies/react-map-gl-geocoder.git"
+  },
+  "keywords": [
+    "react",
+    "mapbox",
+    "mapbox-gl",
+    "mapgl",
+    "react-map-gl",
+    "geocoder"
+  ],
+  "author": "Sam Samskies <samsamskies@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SamSamskies/react-map-gl-geocoder/issues"
+  },
+  "homepage": "https://github.com/SamSamskies/react-map-gl-geocoder",
+  "dependencies": {
+    "@mapbox/mapbox-gl-geocoder": "^2.3.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1"
+  }
+}
