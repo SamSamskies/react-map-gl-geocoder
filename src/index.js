@@ -5,6 +5,11 @@ import { getAccessToken } from 'react-map-gl/dist/mapbox/mapbox'
 import PropTypes from 'prop-types'
 
 class Geocoder extends Component {
+  componentDidMount() {
+    // mapRef is undefined on initial page load, so force an update to initialize geocoder
+    this.forceUpdate()
+  }
+
   componentDidUpdate() {
     if (this.geocoder !== undefined) {
       return
