@@ -16,9 +16,10 @@ class Geocoder extends Component {
     }
 
     const { mapRef, mapboxApiAccessToken, options } = this.props
-    const map = mapRef.current.getMap()
 
-    this.geocoder = map.addControl(new MapboxGeocoder({ accessToken: mapboxApiAccessToken, ...options }))
+    this.geocoder = new MapboxGeocoder({ accessToken: mapboxApiAccessToken, ...options })
+
+    mapRef.current.getMap().addControl(this.geocoder)
   }
 
   getGeocoder() {
