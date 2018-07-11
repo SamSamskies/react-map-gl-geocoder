@@ -69,7 +69,7 @@ class Example extends Component {
         {...this.state.viewport}
         onViewportChange={this._onViewportChange}
         mapboxApiAccessToken={MAPBOX_TOKEN}>
-        <Geocoder mapRef={this.mapRef} mapboxApiAccessToken={MAPBOX_TOKEN} />
+        <Geocoder mapRef={this.mapRef} onViewportChange={this._onViewportChange} mapboxApiAccessToken={MAPBOX_TOKEN} />
       </MapGL>
     )
   }
