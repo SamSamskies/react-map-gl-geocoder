@@ -1753,7 +1753,7 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-map-gl@^3.3.0:
+react-map-gl@^3.2.10:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/react-map-gl/-/react-map-gl-3.3.0.tgz#dad906ec4c56a51873884325c44025d49516a9ea"
   dependencies:
