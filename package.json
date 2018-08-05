@@ -27,7 +27,7 @@
   "homepage": "https://github.com/SamSamskies/react-map-gl-geocoder",
   "dependencies": {
     "@mapbox/mapbox-gl-geocoder": "^2.3.0",
-    "react-map-gl": "^3.2.10"
+    "react-map-gl": "3.2.10"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
