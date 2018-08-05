@@ -25,8 +25,23 @@ $ yarn add react-map-gl-geocoder
 import 'mapbox-gl/dist/mapbox-gl.css'
 import React, { Component } from 'react'
 import MapGL from 'react-map-gl'
-import { getAccessToken } from 'react-map-gl/dist/mapbox/mapbox'
 import Geocoder from 'react-map-gl-geocoder'
+
+function getAccessToken() {
+  var accessToken = null;
+
+  if (typeof window !== 'undefined' && window.location) {
+    var match = window.location.search.match(/access_token=([^&\/]*)/);
+    accessToken = match && match[1];
+  }
+
+  if (!accessToken && typeof process !== 'undefined') {
+    // Note: This depends on bundler plugins (e.g. webpack) inmporting environment correctly
+    accessToken = accessToken || process.env.MapboxAccessToken; // eslint-disable-line
+  }
+
+  return accessToken || null;
+}
 
 // Ways to set Mapbox token: https://uber.github.io/react-map-gl/#/Documentation/getting-started/about-mapbox-tokens
 const MAPBOX_TOKEN = getAccessToken()
