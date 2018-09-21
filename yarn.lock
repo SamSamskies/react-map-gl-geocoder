@@ -2,6 +2,12 @@
 # yarn lockfile v1
 
 
+"@babel/runtime@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0.tgz#adeb78fedfc855aa05bc041640f3f6f98e85424c"
+  dependencies:
+    regenerator-runtime "^0.12.0"
+
 "@mapbox/geojson-area@0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@mapbox/geojson-area/-/geojson-area-0.2.2.tgz#18d7814aa36bf23fbbcc379f8e26a22927debf10"
@@ -1479,6 +1485,18 @@ math.gl@^2.0.0:
     gl-vec3 "^1.0.3"
     gl-vec4 "^1.0.1"
 
+math.gl@^2.1.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/math.gl/-/math.gl-2.2.0.tgz#301dcda760ae235f5fdf471dd67ef2aa8c74d659"
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    gl-mat3 "^1.0.0"
+    gl-mat4 "^1.1.4"
+    gl-quat "^1.0.0"
+    gl-vec2 "^1.0.0"
+    gl-vec3 "^1.0.3"
+    gl-vec4 "^1.0.1"
+
 merge-source-map@1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/merge-source-map/-/merge-source-map-1.0.4.tgz#a5de46538dae84d4114cc5ea02b4772a6346701f"
@@ -1814,6 +1832,10 @@ regenerator-runtime@^0.11.0:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
 
+regenerator-runtime@^0.12.0:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.12.1.tgz#fa1a71544764c036f8c49b13a08b2594c9f8a0de"
+
 regenerator-transform@^0.10.0:
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/regenerator-transform/-/regenerator-transform-0.10.1.tgz#1e4996837231da8b7f3cf4114d71b5691a0680dd"
@@ -2143,6 +2165,13 @@ viewport-mercator-project@^5.1.0:
   resolved "https://registry.yarnpkg.com/viewport-mercator-project/-/viewport-mercator-project-5.2.0.tgz#2c50bc624a085d01a3a486f22ec329c0511fe4bd"
   dependencies:
     math.gl "^2.0.0"
+
+viewport-mercator-project@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/viewport-mercator-project/-/viewport-mercator-project-5.3.0.tgz#16b7c99813495ef951480893a5b7d82d9c49034b"
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    math.gl "^2.1.0"
 
 vlq@^0.2.2:
   version "0.2.3"
