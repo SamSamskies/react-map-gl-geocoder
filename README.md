@@ -81,6 +81,7 @@ class Example extends Component {
     })
   }
 
+  // if you are happy with Geocoder default settings, you can just use handleViewportChange directly
   handleGeocoderViewportChange = (viewport) => {
     const geocoderDefaultOverrides = { transitionDuration: 1000 }
 
