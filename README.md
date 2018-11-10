@@ -60,20 +60,33 @@ class Example extends Component {
   mapRef = React.createRef()
 
   componentDidMount() {
-    window.addEventListener('resize', this._resize.bind(this))
-    this._resize()
+    window.addEventListener('resize', this.resize)
+    this.resize()
   }
 
-  _resize() {
-    this._onViewportChange({
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resize)
+  }
+
+  resize = () => {
+    this.handleViewportChange({
       width: window.innerWidth,
       height: window.innerHeight
     })
   }
 
-  _onViewportChange = (viewport) => {
+  handleViewportChange = (viewport) => {
     this.setState({
       viewport: { ...this.state.viewport, ...viewport }
+    })
+  }
+
+  handleGeocoderViewportChange = (viewport) => {
+    const geocoderDefaultOverrides = { transitionDuration: 1000 }
+
+    return this.handleViewportChange({
+      ...viewport,
+      ...geocoderDefaultOverrides
     })
   }
 
@@ -82,9 +95,13 @@ class Example extends Component {
       <MapGL
         ref={this.mapRef}
         {...this.state.viewport}
-        onViewportChange={this._onViewportChange}
+        onViewportChange={this.handleViewportChange}
         mapboxApiAccessToken={MAPBOX_TOKEN}>
-        <Geocoder mapRef={this.mapRef} onViewportChange={this._onViewportChange} mapboxApiAccessToken={MAPBOX_TOKEN} />
+        <Geocoder
+          mapRef={this.mapRef}
+          onViewportChange={this.handleGeocoderViewportChange}
+          mapboxApiAccessToken={MAPBOX_TOKEN}
+        />
       </MapGL>
     )
   }
