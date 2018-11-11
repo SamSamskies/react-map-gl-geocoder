@@ -27,9 +27,42 @@ class Geocoder extends Component {
       return
     }
 
-    const { mapRef, mapboxApiAccessToken, options } = this.props
+    const {
+      mapRef,
+      mapboxApiAccessToken,
+      zoom,
+      flyTo,
+      placeholder,
+      proximity,
+      trackProximity,
+      bbox,
+      types,
+      country,
+      minLength,
+      limit,
+      language,
+      filter,
+      localGeocoder,
+      options
+    } = this.props
 
-    this.geocoder = new MapboxGeocoder({ accessToken: mapboxApiAccessToken, ...options })
+    this.geocoder = new MapboxGeocoder({
+      accessToken: mapboxApiAccessToken,
+      ...options,
+      zoom,
+      flyTo,
+      placeholder,
+      proximity,
+      trackProximity,
+      bbox,
+      types,
+      country,
+      minLength,
+      limit,
+      language,
+      filter,
+      localGeocoder
+    })
     this.geocoder.on('clear', this.handleClear)
     this.geocoder.on('loading', this.handleLoading)
     this.geocoder.on('results', this.handleResults)
@@ -115,6 +148,19 @@ class Geocoder extends Component {
     mapRef: PropTypes.object.isRequired,
     onViewportChange: PropTypes.func.isRequired,
     mapboxApiAccessToken: PropTypes.string,
+    zoom: PropTypes.number,
+    flyTo: PropTypes.bool,
+    placeholder: PropTypes.string,
+    proximity: PropTypes.object,
+    trackProximity: PropTypes.bool,
+    bbox: PropTypes.array,
+    types: PropTypes.string,
+    country: PropTypes.string,
+    minLength: PropTypes.number,
+    limit: PropTypes.number,
+    language: PropTypes.string,
+    filter: PropTypes.func,
+    localGeocoder: PropTypes.func,
     onClear: PropTypes.func,
     onLoading: PropTypes.func,
     onResults: PropTypes.func,
@@ -125,6 +171,12 @@ class Geocoder extends Component {
 
   static defaultProps = {
     mapboxApiAccessToken: getAccessToken(),
+    zoom: 16,
+    flyTo: true,
+    placeholder: 'Search',
+    trackProximity: false,
+    minLength: 2,
+    limit: 5,
     onClear: () => {},
     onLoading: () => {},
     onResults: () => {},
