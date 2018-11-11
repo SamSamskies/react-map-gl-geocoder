@@ -43,7 +43,8 @@ class Geocoder extends Component {
       language,
       filter,
       localGeocoder,
-      options
+      options,
+      onInit
     } = this.props
 
     this.geocoder = new MapboxGeocoder({
@@ -70,6 +71,8 @@ class Geocoder extends Component {
     this.geocoder.on('error', this.handleError)
 
     mapRef.current.getMap().addControl(this.geocoder)
+
+    onInit(this.geocoder)
   }
 
   handleClear = () => {
@@ -161,6 +164,7 @@ class Geocoder extends Component {
     language: PropTypes.string,
     filter: PropTypes.func,
     localGeocoder: PropTypes.func,
+    onInit: PropTypes.func,
     onClear: PropTypes.func,
     onLoading: PropTypes.func,
     onResults: PropTypes.func,
@@ -177,6 +181,7 @@ class Geocoder extends Component {
     trackProximity: false,
     minLength: 2,
     limit: 5,
+    onInit: () => {},
     onClear: () => {},
     onLoading: () => {},
     onResults: () => {},
