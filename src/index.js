@@ -16,6 +16,12 @@ class Geocoder extends Component {
     this.forceUpdate()
   }
 
+  componentWillUnmount() {
+    if (this.geocoder) {
+      this.geocoder = null
+    }
+  }
+
   componentDidUpdate() {
     if (this.geocoder !== undefined) {
       return
