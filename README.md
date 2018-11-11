@@ -45,7 +45,7 @@ $ yarn add react-map-gl-geocoder
   - `language` {String?} Specify the language to use for response text and query result weighting. Options are IETF language tags comprised of a mandatory ISO 639-1 language code and optionally one or more IETF subtags for country or script. More than one value can also be specified, separated by commas.
   - `filter` {Function?} A function which accepts a Feature in the [Carmen GeoJSON](https://github.com/mapbox/carmen/blob/master/carmen-geojson.md) format to filter out results from the Geocoding API response before they are included in the suggestions list. Return `true` to keep the item, `false` otherwise.
   - `localGeocoder` {Function?} A function accepting the query string which performs local geocoding to supplement results from the Mapbox Geocoding API. Expected to return an Array of GeoJSON Features in the [Carmen GeoJSON](https://github.com/mapbox/carmen/blob/master/carmen-geojson.md) format.
-  - `onInit` {Function} Returns handle to Mapbox geocoder instance when it's initialized
+  - `onInit` {Function} Is passed Mapbox geocoder instance as param and is executed after Mapbox geocoder is initialized
   - `onClear` {Function} Executed when the input is cleared
   - `onLoading` {Function} Is passed `{ query }` as a param and is executed when the geocoder is looking up a query
   - `onResults` {Function} Is passed `{ results }` as a param and is executed when the geocoder returns a response
