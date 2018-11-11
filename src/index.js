@@ -50,8 +50,9 @@ class Geocoder extends Component {
     this.props.onResults(event)
   }
 
-  handleResult = ({ result }) => {
-    const { mapRef, onViewportChange } = this.props
+  handleResult = (event) => {
+    const { result } = event
+    const { mapRef, onViewportChange, onResult } = this.props
     const { id, bbox, center } = result
     const [longitude, latitude] = center
     const bboxExceptions = {
@@ -93,6 +94,8 @@ class Geocoder extends Component {
     } else {
       onViewportChange({ longitude, latitude, zoom })
     }
+
+    onResult(event)
   }
 
   getGeocoder() {
@@ -110,6 +113,7 @@ class Geocoder extends Component {
     onClear: PropTypes.func,
     onLoading: PropTypes.func,
     onResults: PropTypes.func,
+    onResult: PropTypes.func,
     options: PropTypes.object // deprecated and will be removed in v2
   }
 
@@ -117,7 +121,8 @@ class Geocoder extends Component {
     mapboxApiAccessToken: getAccessToken(),
     onClear: () => {},
     onLoading: () => {},
-    onResults: () => {}
+    onResults: () => {},
+    onResult: () => {}
   }
 }
 
