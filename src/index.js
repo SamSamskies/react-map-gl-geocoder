@@ -3,11 +3,26 @@ import { Component } from 'react'
 import PropTypes from 'prop-types'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import { FlyToInterpolator } from 'react-map-gl'
-import { getAccessToken } from 'react-map-gl/dist/mapbox/mapbox'
 import WebMercatorViewport from 'viewport-mercator-project'
 
 function fitBounds(bounds, viewport) {
   return new WebMercatorViewport(viewport).fitBounds(bounds)
+}
+
+function getAccessToken() {
+  var accessToken = null
+
+  if (typeof window !== 'undefined' && window.location) {
+    var match = window.location.search.match(/access_token=([^&\/]*)/)
+    accessToken = match && match[1]
+  }
+
+  if (!accessToken && typeof process !== 'undefined') {
+    // Note: This depends on bundler plugins (e.g. webpack) inmporting environment correctly
+    accessToken = accessToken || process.env.MapboxAccessToken // eslint-disable-line
+  }
+
+  return accessToken || null
 }
 
 class Geocoder extends Component {
