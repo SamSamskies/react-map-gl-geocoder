@@ -27,53 +27,57 @@ class Geocoder extends Component {
       return
     }
 
-    const { mapRef, onViewportChange, mapboxApiAccessToken, options } = this.props
+    const { mapRef, mapboxApiAccessToken, options } = this.props
 
     this.geocoder = new MapboxGeocoder({ accessToken: mapboxApiAccessToken, ...options })
-    this.geocoder.on('result', ({ result: { id, bbox, center } }) => {
-      const [longitude, latitude] = center
-      const bboxExceptions = {
-        'country.3148': {
-          name: 'France',
-          bbox: [[-4.59235, 41.380007], [9.560016, 51.148506]]
-        },
-        'country.3145': {
-          name: 'United States',
-          bbox: [[-171.791111, 18.91619], [-66.96466, 71.357764]]
-        },
-        'country.330': {
-          name: 'Russia',
-          bbox: [[19.66064, 41.151416], [190.10042, 81.2504]]
-        },
-        'country.3179': {
-          name: 'Canada',
-          bbox: [[-140.99778, 41.675105], [-52.648099, 83.23324]]
-        }
-      }
-      const width = mapRef.current.props.width
-      const height = mapRef.current.props.height
-      let zoom = this.geocoder.options.zoom
-
-      if (!bboxExceptions[id] && bbox) {
-        zoom = fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], { width, height }).zoom
-      } else if (bboxExceptions[id]) {
-        zoom = fitBounds(bboxExceptions[id].bbox, { width, height }).zoom
-      }
-
-      if (this.geocoder.options.flyTo) {
-        onViewportChange({
-          longitude,
-          latitude,
-          zoom,
-          transitionInterpolator: new FlyToInterpolator(),
-          transitionDuration: 3000
-        })
-      } else {
-        onViewportChange({ longitude, latitude, zoom })
-      }
-    })
+    this.geocoder.on('result', this.handleResult)
 
     mapRef.current.getMap().addControl(this.geocoder)
+  }
+
+  handleResult = ({ result }) => {
+    const { mapRef, onViewportChange } = this.props
+    const { id, bbox, center } = result
+    const [longitude, latitude] = center
+    const bboxExceptions = {
+      'country.3148': {
+        name: 'France',
+        bbox: [[-4.59235, 41.380007], [9.560016, 51.148506]]
+      },
+      'country.3145': {
+        name: 'United States',
+        bbox: [[-171.791111, 18.91619], [-66.96466, 71.357764]]
+      },
+      'country.330': {
+        name: 'Russia',
+        bbox: [[19.66064, 41.151416], [190.10042, 81.2504]]
+      },
+      'country.3179': {
+        name: 'Canada',
+        bbox: [[-140.99778, 41.675105], [-52.648099, 83.23324]]
+      }
+    }
+    const width = mapRef.current.props.width
+    const height = mapRef.current.props.height
+    let zoom = this.geocoder.options.zoom
+
+    if (!bboxExceptions[id] && bbox) {
+      zoom = fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], { width, height }).zoom
+    } else if (bboxExceptions[id]) {
+      zoom = fitBounds(bboxExceptions[id].bbox, { width, height }).zoom
+    }
+
+    if (this.geocoder.options.flyTo) {
+      onViewportChange({
+        longitude,
+        latitude,
+        zoom,
+        transitionInterpolator: new FlyToInterpolator(),
+        transitionDuration: 3000
+      })
+    } else {
+      onViewportChange({ longitude, latitude, zoom })
+    }
   }
 
   getGeocoder() {
