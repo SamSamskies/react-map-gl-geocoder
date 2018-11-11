@@ -32,12 +32,17 @@ class Geocoder extends Component {
     this.geocoder = new MapboxGeocoder({ accessToken: mapboxApiAccessToken, ...options })
     this.geocoder.on('clear', this.handleClear)
     this.geocoder.on('result', this.handleResult)
+    this.geocoder.on('loading', this.handleLoading)
 
     mapRef.current.getMap().addControl(this.geocoder)
   }
 
   handleClear = () => {
     this.props.onClear()
+  }
+
+  handleLoading = (event) => {
+    this.props.onLoading(event)
   }
 
   handleResult = ({ result }) => {
@@ -98,12 +103,14 @@ class Geocoder extends Component {
     onViewportChange: PropTypes.func.isRequired,
     mapboxApiAccessToken: PropTypes.string,
     onClear: PropTypes.func,
+    onLoading: PropTypes.func,
     options: PropTypes.object // deprecated and will be removed in v2
   }
 
   static defaultProps = {
     mapboxApiAccessToken: getAccessToken(),
-    onClear: () => {}
+    onClear: () => {},
+    onLoading: () => {}
   }
 }
 
