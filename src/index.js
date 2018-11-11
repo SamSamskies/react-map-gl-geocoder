@@ -64,7 +64,6 @@ class Geocoder extends Component {
 
     this.geocoder = new MapboxGeocoder({
       accessToken: mapboxApiAccessToken,
-      ...options,
       zoom,
       flyTo,
       placeholder,
@@ -77,7 +76,8 @@ class Geocoder extends Component {
       limit,
       language,
       filter,
-      localGeocoder
+      localGeocoder,
+      ...options
     })
     this.geocoder.on('clear', this.handleClear)
     this.geocoder.on('loading', this.handleLoading)
