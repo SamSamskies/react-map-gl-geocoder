@@ -88,7 +88,7 @@ class Geocoder extends Component {
     mapRef: PropTypes.object.isRequired,
     onViewportChange: PropTypes.func.isRequired,
     mapboxApiAccessToken: PropTypes.string,
-    options: PropTypes.object
+    options: PropTypes.object // deprecated and will be removed in v2
   }
 
   static defaultProps = {
