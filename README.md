@@ -23,7 +23,7 @@ $ yarn add react-map-gl-geocoder
 ## Props
   - `mapRef` {Object} Required. 
   - `onViewportChange` {Function} Required. 
-  - `mapboxApiAccessToken` {String} Required.
+  - `mapboxApiAccessToken` {String} Required. If not passed in as prop, it will try to default it to value set on `MapboxAccessToken` environment variable or URL query param `?access_token=TOKEN`. See https://uber.github.io/react-map-gl/#/Documentation/getting-started/about-mapbox-tokens for more details.
   - `zoom` {Number} On geocoded result what zoom level should the map animate to when a `bbox` isn't found in the response. If a `bbox` is found the map will fit to the `bbox`. (optional, default `16`)
   - `flyTo` {Boolean} If false, animating the map to a selected result is disabled. (optional, default `true`)
   - `placeholder` {String} Override the default placeholder attribute value. (optional, default `"Search"`)
