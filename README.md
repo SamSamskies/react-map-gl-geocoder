@@ -20,6 +20,40 @@ $ yarn add react-map-gl-geocoder
 ```
 
 
+## Props
+  - `mapRef` {Object} Required. 
+  - `onViewportChange` {Function} Required. 
+  - `mapboxApiAccessToken` {String} Required.
+  - `zoom` {Number} On geocoded result what zoom level should the map animate to when a `bbox` isn't found in the response. If a `bbox` is found the map will fit to the `bbox`. (optional, default `16`)
+  - `flyTo` {Boolean} If false, animating the map to a selected result is disabled. (optional, default `true`)
+  - `placeholder` {String} Override the default placeholder attribute value. (optional, default `"Search"`)
+  - `proximity` {Object?} a proximity argument: this is
+      a geographical point given as an object with latitude and longitude
+      properties. Search results closer to this point will be given
+      higher priority.
+  - `trackProximity` {Boolean} If true, the geocoder proximity will automatically update based on the map view. (optional, default `false`)
+  - `bbox` {Array?} a bounding box argument: this is
+      a bounding box given as an array in the format [minX, minY, maxX, maxY].
+      Search results will be limited to the bounding box.
+  - `types` {String?} a comma seperated list of types that filter
+      results to match those specified. See <https://www.mapbox.com/developers/api/geocoding/#filter-type>
+      for available types.
+  - `country` {String?} a comma separated list of country codes to
+      limit results to specified country or countries.
+  - `minLength` {Number} Minimum number of characters to enter before results are shown. (optional, default `2`)
+  - `limit` {Number} Maximum number of results to show. (optional, default `5`)
+  - `language` {String?} Specify the language to use for response text and query result weighting. Options are IETF language tags comprised of a mandatory ISO 639-1 language code and optionally one or more IETF subtags for country or script. More than one value can also be specified, separated by commas.
+  - `filter` {Function?} A function which accepts a Feature in the [Carmen GeoJSON](https://github.com/mapbox/carmen/blob/master/carmen-geojson.md) format to filter out results from the Geocoding API response before they are included in the suggestions list. Return `true` to keep the item, `false` otherwise.
+  - `localGeocoder` {Function?} A function accepting the query string which performs local geocoding to supplement results from the Mapbox Geocoding API. Expected to return an Array of GeoJSON Features in the [Carmen GeoJSON](https://github.com/mapbox/carmen/blob/master/carmen-geojson.md) format.
+  - `onInit` {Function} Returns handle to Mapbox geocoder instance when it's initialized
+  - `onClear` {Function} Executed when the input is cleared
+  - `onLoading` {Function} Is passed `{ query }` as a param and is executed when the geocoder is looking up a query
+  - `onResults` {Function} Is passed `{ results }` as a param and is executed when the geocoder returns a response
+  - `onResult` {Function} Is passed `{ result }` as a param and is executed when the geocoder input is set
+  - `onError` {Function} Is passed `{ error }` as a param and is executed when an error occurs with the geocoder
+  
+  
+  
 ## Example
 ```js
 import 'mapbox-gl/dist/mapbox-gl.css'
