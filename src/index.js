@@ -34,6 +34,7 @@ class Geocoder extends Component {
     this.geocoder.on('loading', this.handleLoading)
     this.geocoder.on('results', this.handleResults)
     this.geocoder.on('result', this.handleResult)
+    this.geocoder.on('error', this.handleError)
 
     mapRef.current.getMap().addControl(this.geocoder)
   }
@@ -98,6 +99,10 @@ class Geocoder extends Component {
     onResult(event)
   }
 
+  handleError = (event) => {
+    this.props.onError(event)
+  }
+
   getGeocoder() {
     return this.geocoder
   }
@@ -114,6 +119,7 @@ class Geocoder extends Component {
     onLoading: PropTypes.func,
     onResults: PropTypes.func,
     onResult: PropTypes.func,
+    onError: PropTypes.func,
     options: PropTypes.object // deprecated and will be removed in v2
   }
 
@@ -122,7 +128,8 @@ class Geocoder extends Component {
     onClear: () => {},
     onLoading: () => {},
     onResults: () => {},
-    onResult: () => {}
+    onResult: () => {},
+    onError: () => {}
   }
 }
 
