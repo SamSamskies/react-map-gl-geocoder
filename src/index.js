@@ -5,6 +5,8 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import { FlyToInterpolator } from 'react-map-gl'
 import WebMercatorViewport from 'viewport-mercator-project'
 
+const VALID_POSITIONS = ['top-left', 'top-right', 'bottom-left', 'bottom-right']
+
 function fitBounds(bounds, viewport) {
   return new WebMercatorViewport(viewport).fitBounds(bounds)
 }
@@ -59,7 +61,8 @@ class Geocoder extends Component {
       filter,
       localGeocoder,
       options,
-      onInit
+      onInit,
+      position
     } = this.props
 
     this.geocoder = new MapboxGeocoder({
@@ -85,7 +88,7 @@ class Geocoder extends Component {
     this.geocoder.on('result', this.handleResult)
     this.geocoder.on('error', this.handleError)
 
-    mapRef.current.getMap().addControl(this.geocoder)
+    mapRef.current.getMap().addControl(this.geocoder, VALID_POSITIONS.find((_position) => position === _position))
 
     onInit(this.geocoder)
   }
@@ -179,6 +182,7 @@ class Geocoder extends Component {
     language: PropTypes.string,
     filter: PropTypes.func,
     localGeocoder: PropTypes.func,
+    position: PropTypes.oneOf(VALID_POSITIONS),
     onInit: PropTypes.func,
     onClear: PropTypes.func,
     onLoading: PropTypes.func,
@@ -196,6 +200,7 @@ class Geocoder extends Component {
     trackProximity: false,
     minLength: 2,
     limit: 5,
+    position: 'top-right',
     onInit: () => {},
     onClear: () => {},
     onLoading: () => {},
