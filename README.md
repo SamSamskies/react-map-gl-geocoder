@@ -2,6 +2,9 @@
 
 React wrapper for mapbox-gl-geocoder for use with react-map-gl.
 
+[![NPM](https://img.shields.io/npm/v/react-map-gl-geocoder.svg)](https://www.npmjs.com/package/react-map-gl-geocoder)
+
+
 ## Demo
 
 https://codesandbox.io/s/vv29y730q3
