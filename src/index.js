@@ -34,6 +34,12 @@ class Geocoder extends Component {
   }
 
   componentWillUnmount() {
+    const { mapRef } = this.props
+
+    if (mapRef && mapRef.current && mapRef.current.getMap()) {
+      mapRef.current.getMap().removeControl(this.geocoder)
+    }
+
     if (this.geocoder) {
       this.geocoder = null
     }
@@ -88,7 +94,9 @@ class Geocoder extends Component {
     this.geocoder.on('result', this.handleResult)
     this.geocoder.on('error', this.handleError)
 
-    mapRef.current.getMap().addControl(this.geocoder, VALID_POSITIONS.find((_position) => position === _position))
+    if (mapRef && mapRef.current && mapRef.current.getMap()) {
+      mapRef.current.getMap().addControl(this.geocoder, VALID_POSITIONS.find((_position) => position === _position))
+    }
 
     onInit(this.geocoder)
   }
