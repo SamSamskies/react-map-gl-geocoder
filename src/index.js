@@ -1,55 +1,56 @@
-import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
-import { Component } from 'react'
-import PropTypes from 'prop-types'
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
-import { FlyToInterpolator } from 'react-map-gl'
-import WebMercatorViewport from 'viewport-mercator-project'
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+import { Component } from "react";
+import PropTypes from "prop-types";
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import { FlyToInterpolator } from "react-map-gl";
+import WebMercatorViewport from "viewport-mercator-project";
 
-const VALID_POSITIONS = ['top-left', 'top-right', 'bottom-left', 'bottom-right']
+const VALID_POSITIONS = [
+  "top-left",
+  "top-right",
+  "bottom-left",
+  "bottom-right"
+];
 
 function fitBounds(bounds, viewport) {
-  return new WebMercatorViewport(viewport).fitBounds(bounds)
+  return new WebMercatorViewport(viewport).fitBounds(bounds);
 }
 
 function getAccessToken() {
-  var accessToken = null
+  var accessToken = null;
 
-  if (typeof window !== 'undefined' && window.location) {
-    var match = window.location.search.match(/access_token=([^&\/]*)/)
-    accessToken = match && match[1]
+  if (typeof window !== "undefined" && window.location) {
+    var match = window.location.search.match(/access_token=([^&\/]*)/);
+    accessToken = match && match[1];
   }
 
-  if (!accessToken && typeof process !== 'undefined') {
+  if (!accessToken && typeof process !== "undefined") {
     // Note: This depends on bundler plugins (e.g. webpack) inmporting environment correctly
-    accessToken = accessToken || process.env.MapboxAccessToken // eslint-disable-line
+    accessToken = accessToken || process.env.MapboxAccessToken; // eslint-disable-line
   }
 
-  return accessToken || null
+  return accessToken || null;
 }
 
 class Geocoder extends Component {
   componentDidMount() {
     // mapRef is undefined on initial page load, so force an update to initialize geocoder
-    this.forceUpdate()
+    this.initializeGeocoder();
   }
 
   componentWillUnmount() {
-    const { mapRef } = this.props
+    const { mapRef } = this.props;
 
     if (mapRef && mapRef.current && mapRef.current.getMap()) {
-      mapRef.current.getMap().removeControl(this.geocoder)
+      mapRef.current.getMap().removeControl(this.geocoder);
     }
 
     if (this.geocoder) {
-      this.geocoder = null
+      this.geocoder = null;
     }
   }
 
-  componentDidUpdate() {
-    if (this.geocoder !== undefined) {
-      return
-    }
-
+  initializeGeocoder = () => {
     const {
       mapRef,
       mapboxApiAccessToken,
@@ -66,10 +67,8 @@ class Geocoder extends Component {
       language,
       filter,
       localGeocoder,
-      options,
-      onInit,
-      position
-    } = this.props
+      options
+    } = this.props;
 
     this.geocoder = new MapboxGeocoder({
       accessToken: mapboxApiAccessToken,
@@ -87,63 +86,82 @@ class Geocoder extends Component {
       filter,
       localGeocoder,
       ...options
-    })
-    this.geocoder.on('clear', this.handleClear)
-    this.geocoder.on('loading', this.handleLoading)
-    this.geocoder.on('results', this.handleResults)
-    this.geocoder.on('result', this.handleResult)
-    this.geocoder.on('error', this.handleError)
+    });
+    this.geocoder.on("clear", this.handleClear);
+    this.geocoder.on("loading", this.handleLoading);
+    this.geocoder.on("results", this.handleResults);
+    this.geocoder.on("result", this.handleResult);
+    this.geocoder.on("error", this.handleError);
+  };
 
-    if (mapRef && mapRef.current && mapRef.current.getMap()) {
-      mapRef.current.getMap().addControl(this.geocoder, VALID_POSITIONS.find((_position) => position === _position))
+  mountGeocoder = () => {
+    this._isMounted = true;
+    const { position, divId, mapRef } = this.props;
+    const div = document.getElementById(divId);
+    const mapgl = mapRef.current.getMap();
+    if (div) {
+      div.appendChild(this.geocoder.onAdd(mapgl));
+    } else {
+      mapgl.addControl(
+        this.geocoder,
+        VALID_POSITIONS.find(_position => position === _position)
+      );
     }
+  };
 
-    onInit(this.geocoder)
+  componentDidUpdate() {
+    if (!this._isMounted) {
+      this.mountGeocoder();
+      if (this.props.onInit) this.props.onInit(this.geocoder);
+    }
   }
 
   handleClear = () => {
-    this.props.onClear()
-  }
+    this.props.onClear();
+  };
 
-  handleLoading = (event) => {
-    this.props.onLoading(event)
-  }
+  handleLoading = event => {
+    this.props.onLoading(event);
+  };
 
-  handleResults = (event) => {
-    this.props.onResults(event)
-  }
+  handleResults = event => {
+    this.props.onResults(event);
+  };
 
-  handleResult = (event) => {
-    const { result } = event
-    const { mapRef, onViewportChange, onResult } = this.props
-    const { id, bbox, center } = result
-    const [longitude, latitude] = center
+  handleResult = event => {
+    const { result } = event;
+    const { mapRef, onViewportChange, onResult } = this.props;
+    const { id, bbox, center } = result;
+    const [longitude, latitude] = center;
     const bboxExceptions = {
-      'country.3148': {
-        name: 'France',
+      "country.3148": {
+        name: "France",
         bbox: [[-4.59235, 41.380007], [9.560016, 51.148506]]
       },
-      'country.3145': {
-        name: 'United States',
+      "country.3145": {
+        name: "United States",
         bbox: [[-171.791111, 18.91619], [-66.96466, 71.357764]]
       },
-      'country.330': {
-        name: 'Russia',
+      "country.330": {
+        name: "Russia",
         bbox: [[19.66064, 41.151416], [190.10042, 81.2504]]
       },
-      'country.3179': {
-        name: 'Canada',
+      "country.3179": {
+        name: "Canada",
         bbox: [[-140.99778, 41.675105], [-52.648099, 83.23324]]
       }
-    }
-    const width = mapRef.current.props.width
-    const height = mapRef.current.props.height
-    let zoom = this.geocoder.options.zoom
+    };
+    const width = mapRef.current.props.width;
+    const height = mapRef.current.props.height;
+    let zoom = this.geocoder.options.zoom;
 
     if (!bboxExceptions[id] && bbox) {
-      zoom = fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], { width, height }).zoom
+      zoom = fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], {
+        width,
+        height
+      }).zoom;
     } else if (bboxExceptions[id]) {
-      zoom = fitBounds(bboxExceptions[id].bbox, { width, height }).zoom
+      zoom = fitBounds(bboxExceptions[id].bbox, { width, height }).zoom;
     }
 
     if (this.geocoder.options.flyTo) {
@@ -153,24 +171,24 @@ class Geocoder extends Component {
         zoom,
         transitionInterpolator: new FlyToInterpolator(),
         transitionDuration: 3000
-      })
+      });
     } else {
-      onViewportChange({ longitude, latitude, zoom })
+      onViewportChange({ longitude, latitude, zoom });
     }
 
-    onResult(event)
-  }
+    onResult(event);
+  };
 
-  handleError = (event) => {
-    this.props.onError(event)
-  }
+  handleError = event => {
+    this.props.onError(event);
+  };
 
   getGeocoder() {
-    return this.geocoder
+    return this.geocoder;
   }
 
   render() {
-    return null
+    return null;
   }
 
   static propTypes = {
@@ -197,25 +215,26 @@ class Geocoder extends Component {
     onResults: PropTypes.func,
     onResult: PropTypes.func,
     onError: PropTypes.func,
+    divId: PropTypes.string,
     options: PropTypes.object // deprecated and will be removed in v2
-  }
+  };
 
   static defaultProps = {
     mapboxApiAccessToken: getAccessToken(),
     zoom: 16,
     flyTo: true,
-    placeholder: 'Search',
+    placeholder: "Search",
     trackProximity: false,
     minLength: 2,
     limit: 5,
-    position: 'top-right',
+    position: "top-right",
     onInit: () => {},
     onClear: () => {},
     onLoading: () => {},
     onResults: () => {},
     onResult: () => {},
     onError: () => {}
-  }
+  };
 }
 
-export default Geocoder
+export default Geocoder;
