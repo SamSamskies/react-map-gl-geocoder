@@ -12,10 +12,10 @@ function fitBounds(bounds, viewport) {
 }
 
 function getAccessToken() {
-  var accessToken = null
+  let accessToken = null
 
   if (typeof window !== 'undefined' && window.location) {
-    var match = window.location.search.match(/access_token=([^&\/]*)/)
+    const match = window.location.search.match(/access_token=([^&/]*)/)
     accessToken = match && match[1]
   }
 
