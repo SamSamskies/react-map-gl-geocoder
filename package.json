@@ -8,6 +8,14 @@
     "format": "prettier --write 'src/**/*.js'",
     "prepublish": "npm run build"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": ["npm run format", "git add"]
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:SamSamskies/react-map-gl-geocoder.git"
@@ -37,6 +45,8 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "husky": "^1.2.1",
+    "lint-staged": "^8.1.0",
     "prettier": "1.15.3"
   }
 }
