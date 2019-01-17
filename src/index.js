@@ -1,5 +1,5 @@
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
-import { Component } from 'react'
+import { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import { FlyToInterpolator } from 'react-map-gl'
@@ -27,17 +27,16 @@ function getAccessToken() {
   return accessToken || null
 }
 
-class Geocoder extends Component {
+class Geocoder extends PureComponent {
   componentDidMount() {
-    // mapRef is undefined on initial page load, so force an update to initialize geocoder
-    this.forceUpdate()
+    this.initializeGeocoder()
   }
 
   componentWillUnmount() {
-    const { mapRef } = this.props
+    const mapboxMap = this.getMapboxMap()
 
-    if (mapRef && mapRef.current && mapRef.current.getMap()) {
-      mapRef.current.getMap().removeControl(this.geocoder)
+    if (mapboxMap) {
+      mapboxMap.removeControl(this.geocoder)
     }
 
     if (this.geocoder) {
@@ -46,12 +45,17 @@ class Geocoder extends Component {
   }
 
   componentDidUpdate() {
-    if (this.geocoder !== undefined) {
-      return
-    }
+    const mapboxMap = this.getMapboxMap()
 
+    if (this.geocoder) {
+      mapboxMap.removeControl(this.geocoder)
+      this.initializeGeocoder()
+    }
+  }
+
+  initializeGeocoder = () => {
+    const mapboxMap = this.getMapboxMap()
     const {
-      mapRef,
       mapboxApiAccessToken,
       zoom,
       flyTo,
@@ -94,11 +98,17 @@ class Geocoder extends Component {
     this.geocoder.on('result', this.handleResult)
     this.geocoder.on('error', this.handleError)
 
-    if (mapRef && mapRef.current && mapRef.current.getMap()) {
-      mapRef.current.getMap().addControl(this.geocoder, VALID_POSITIONS.find((_position) => position === _position))
+    if (mapboxMap) {
+      mapboxMap.addControl(this.geocoder, VALID_POSITIONS.find((_position) => position === _position))
     }
 
     onInit(this.geocoder)
+  }
+
+  getMapboxMap = () => {
+    const { mapRef } = this.props
+
+    return (mapRef && mapRef.current && mapRef.current.getMap()) || null
   }
 
   handleClear = () => {
