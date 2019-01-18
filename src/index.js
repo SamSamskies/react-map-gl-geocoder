@@ -33,24 +33,12 @@ class Geocoder extends Component {
   }
 
   componentWillUnmount() {
-    const mapboxMap = this.getMapboxMap()
-
-    if (mapboxMap) {
-      mapboxMap.removeControl(this.geocoder)
-    }
-
-    if (this.geocoder) {
-      this.geocoder = null
-    }
+    this.removeGeocoder()
   }
 
   componentDidUpdate() {
-    const mapboxMap = this.getMapboxMap()
-
-    if (this.geocoder) {
-      mapboxMap.removeControl(this.geocoder)
-      this.initializeGeocoder()
-    }
+    this.removeGeocoder()
+    this.initializeGeocoder()
   }
 
   initializeGeocoder = () => {
@@ -93,11 +81,7 @@ class Geocoder extends Component {
       localGeocoder,
       ...options
     })
-    this.geocoder.on('clear', this.handleClear)
-    this.geocoder.on('loading', this.handleLoading)
-    this.geocoder.on('results', this.handleResults)
-    this.geocoder.on('result', this.handleResult)
-    this.geocoder.on('error', this.handleError)
+    this.subscribeEvents()
 
     if (containerNode) {
       containerNode.appendChild(this.geocoder.onAdd(mapboxMap))
@@ -118,6 +102,28 @@ class Geocoder extends Component {
     const { containerRef } = this.props
 
     return (containerRef && containerRef.current) || null
+  }
+
+  subscribeEvents = () => {
+    this.geocoder.on('clear', this.handleClear)
+    this.geocoder.on('loading', this.handleLoading)
+    this.geocoder.on('results', this.handleResults)
+    this.geocoder.on('result', this.handleResult)
+    this.geocoder.on('error', this.handleError)
+  }
+
+  unsubscribeEvents = () => {
+    this.geocoder.off('clear', this.handleClear)
+    this.geocoder.off('loading', this.handleLoading)
+    this.geocoder.off('results', this.handleResults)
+    this.geocoder.off('result', this.handleResult)
+    this.geocoder.off('error', this.handleError)
+  }
+
+  removeGeocoder = () => {
+    this.unsubscribeEvents()
+    this.getMapboxMap().removeControl(this.geocoder)
+    this.geocoder = null
   }
 
   handleClear = () => {
