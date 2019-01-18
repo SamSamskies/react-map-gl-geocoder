@@ -1,5 +1,5 @@
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
-import { PureComponent } from 'react'
+import { Component } from 'react'
 import PropTypes from 'prop-types'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import { FlyToInterpolator } from 'react-map-gl'
@@ -27,7 +27,7 @@ function getAccessToken() {
   return accessToken || null
 }
 
-class Geocoder extends PureComponent {
+class Geocoder extends Component {
   componentDidMount() {
     this.initializeGeocoder()
   }
@@ -55,6 +55,7 @@ class Geocoder extends PureComponent {
 
   initializeGeocoder = () => {
     const mapboxMap = this.getMapboxMap()
+    const containerNode = this.getContainerNode()
     const {
       mapboxApiAccessToken,
       zoom,
@@ -98,7 +99,9 @@ class Geocoder extends PureComponent {
     this.geocoder.on('result', this.handleResult)
     this.geocoder.on('error', this.handleError)
 
-    if (mapboxMap) {
+    if (containerNode) {
+      containerNode.appendChild(this.geocoder.onAdd(mapboxMap))
+    } else {
       mapboxMap.addControl(this.geocoder, VALID_POSITIONS.find((_position) => position === _position))
     }
 
@@ -109,6 +112,12 @@ class Geocoder extends PureComponent {
     const { mapRef } = this.props
 
     return (mapRef && mapRef.current && mapRef.current.getMap()) || null
+  }
+
+  getContainerNode = () => {
+    const { containerRef } = this.props
+
+    return (containerRef && containerRef.current) || null
   }
 
   handleClear = () => {
@@ -185,6 +194,7 @@ class Geocoder extends PureComponent {
 
   static propTypes = {
     mapRef: PropTypes.object.isRequired,
+    containerRef: PropTypes.object,
     onViewportChange: PropTypes.func.isRequired,
     mapboxApiAccessToken: PropTypes.string,
     zoom: PropTypes.number,
