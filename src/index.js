@@ -121,8 +121,14 @@ class Geocoder extends Component {
   }
 
   removeGeocoder = () => {
+    const mapboxMap = this.getMapboxMap()
+
     this.unsubscribeEvents()
-    this.getMapboxMap().removeControl(this.geocoder)
+
+    if (mapboxMap && mapboxMap.removeControl) {
+      this.getMapboxMap().removeControl(this.geocoder)
+    }
+
     this.geocoder = null
   }
 
