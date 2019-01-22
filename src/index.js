@@ -28,6 +28,9 @@ function getAccessToken() {
 }
 
 class Geocoder extends Component {
+  geocoder = null
+  cachedResult = ''
+
   componentDidMount() {
     this.initializeGeocoder()
   }
@@ -89,6 +92,7 @@ class Geocoder extends Component {
       mapboxMap.addControl(this.geocoder, VALID_POSITIONS.find((_position) => position === _position))
     }
 
+    this.geocoder.setInput(this.cachedResult)
     onInit(this.geocoder)
   }
 
@@ -190,6 +194,10 @@ class Geocoder extends Component {
     }
 
     onResult(event)
+
+    if (result && result.place_name) {
+      this.cachedResult = result.place_name
+    }
   }
 
   handleError = (event) => {
