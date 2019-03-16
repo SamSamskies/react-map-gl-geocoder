@@ -151,7 +151,7 @@ class Geocoder extends Component {
   handleResult = (event) => {
     const { result } = event
     const { mapRef, onViewportChange, onResult } = this.props
-    const { id, bbox, center } = result
+    const { id, bbox, center, place_name } = result
     const [longitude, latitude] = center
     const bboxExceptions = {
       'country.3148': {
@@ -187,7 +187,8 @@ class Geocoder extends Component {
         latitude,
         zoom,
         transitionInterpolator: new FlyToInterpolator(),
-        transitionDuration: 3000
+        transitionDuration: 3000,
+        place_name
       })
     } else {
       onViewportChange({ longitude, latitude, zoom })
