@@ -137,6 +137,7 @@ class Geocoder extends Component {
   }
 
   handleClear = () => {
+    this.cachedResult = ''
     this.props.onClear()
   }
 
