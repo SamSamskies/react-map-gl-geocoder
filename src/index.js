@@ -50,7 +50,6 @@ class Geocoder extends Component {
     const {
       mapboxApiAccessToken,
       zoom,
-      flyTo,
       placeholder,
       proximity,
       trackProximity,
@@ -70,7 +69,7 @@ class Geocoder extends Component {
     this.geocoder = new MapboxGeocoder({
       accessToken: mapboxApiAccessToken,
       zoom,
-      flyTo,
+      flyTo: false,
       placeholder,
       proximity,
       trackProximity,
@@ -182,18 +181,13 @@ class Geocoder extends Component {
       zoom = fitBounds(bboxExceptions[id].bbox, { width, height }).zoom
     }
 
-    if (this.geocoder.options.flyTo) {
-      onViewportChange({
-        longitude,
-        latitude,
-        zoom,
-        transitionInterpolator: new FlyToInterpolator(),
-        transitionDuration: 3000
-      })
-    } else {
-      onViewportChange({ longitude, latitude, zoom })
-    }
-
+    onViewportChange({
+      longitude,
+      latitude,
+      zoom,
+      transitionInterpolator: new FlyToInterpolator(),
+      transitionDuration: 3000
+    })
     onResult(event)
 
     if (result && result.place_name) {
@@ -219,7 +213,6 @@ class Geocoder extends Component {
     onViewportChange: PropTypes.func.isRequired,
     mapboxApiAccessToken: PropTypes.string,
     zoom: PropTypes.number,
-    flyTo: PropTypes.bool,
     placeholder: PropTypes.string,
     proximity: PropTypes.object,
     trackProximity: PropTypes.bool,
@@ -244,7 +237,6 @@ class Geocoder extends Component {
   static defaultProps = {
     mapboxApiAccessToken: getAccessToken(),
     zoom: 16,
-    flyTo: true,
     placeholder: 'Search',
     trackProximity: false,
     minLength: 2,
