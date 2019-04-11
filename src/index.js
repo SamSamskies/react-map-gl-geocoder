@@ -210,7 +210,7 @@ class Geocoder extends Component {
   static propTypes = {
     mapRef: PropTypes.object.isRequired,
     containerRef: PropTypes.object,
-    onViewportChange: PropTypes.func.isRequired,
+    onViewportChange: PropTypes.func,
     mapboxApiAccessToken: PropTypes.string,
     zoom: PropTypes.number,
     placeholder: PropTypes.string,
@@ -235,6 +235,7 @@ class Geocoder extends Component {
   }
 
   static defaultProps = {
+    onViewportChange: () => {},
     mapboxApiAccessToken: getAccessToken(),
     zoom: 16,
     placeholder: 'Search',
