@@ -29,7 +29,7 @@ function getAccessToken() {
 
 class Geocoder extends Component {
   geocoder = null
-  cachedResult = ''
+  cachedInputValue = ''
 
   componentDidMount() {
     this.initializeGeocoder()
@@ -49,6 +49,7 @@ class Geocoder extends Component {
     const containerNode = this.getContainerNode()
     const {
       mapboxApiAccessToken,
+      inputValue,
       zoom,
       placeholder,
       proximity,
@@ -91,7 +92,11 @@ class Geocoder extends Component {
       mapboxMap.addControl(this.geocoder, VALID_POSITIONS.find((_position) => position === _position))
     }
 
-    this.geocoder.setInput(this.cachedResult)
+    if (inputValue !== undefined && inputValue !== null) {
+      this.cachedInputValue = inputValue
+    }
+
+    this.geocoder.setInput(this.cachedInputValue)
     onInit(this.geocoder)
   }
 
@@ -136,7 +141,7 @@ class Geocoder extends Component {
   }
 
   handleClear = () => {
-    this.cachedResult = ''
+    this.cachedInputValue = ''
     this.props.onClear()
   }
 
@@ -191,7 +196,7 @@ class Geocoder extends Component {
     onResult(event)
 
     if (result && result.place_name) {
-      this.cachedResult = result.place_name
+      this.cachedInputValue = result.place_name
     }
   }
 
@@ -212,6 +217,7 @@ class Geocoder extends Component {
     containerRef: PropTypes.object,
     onViewportChange: PropTypes.func,
     mapboxApiAccessToken: PropTypes.string,
+    inputValue: PropTypes.string,
     zoom: PropTypes.number,
     placeholder: PropTypes.string,
     proximity: PropTypes.object,

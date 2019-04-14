@@ -28,20 +28,21 @@ $ yarn add react-map-gl-geocoder
   - `containerRef` {Object?} This can be used to place the geocoder outside of the map. The `position` prop is ignored if this is passed in. Example: https://codesandbox.io/s/v0m14q5rly
   - `onViewportChange` {Function} Is passed updated viewport values after executing a query.
   - `mapboxApiAccessToken` {String} Required. If not passed in as prop, it will try to default it to value set on `MapboxAccessToken` environment variable or URL query param `?access_token=TOKEN`. See https://uber.github.io/react-map-gl/#/Documentation/getting-started/about-mapbox-tokens for more details.
+  - `inputValue` {String?} Sets the search input value
   - `zoom` {Number} On geocoded result what zoom level should the map animate to when a `bbox` isn't found in the response. If a `bbox` is found the map will fit to the `bbox`. (optional, default `16`)
   - `placeholder` {String} Override the default placeholder attribute value. (optional, default `"Search"`)
-  - `proximity` {Object?} a proximity argument: this is
+  - `proximity` {Object?} A proximity argument: this is
       a geographical point given as an object with latitude and longitude
       properties. Search results closer to this point will be given
       higher priority.
   - `trackProximity` {Boolean} If true, the geocoder proximity will automatically update based on the map view. (optional, default `false`)
-  - `bbox` {Array?} a bounding box argument: this is
+  - `bbox` {Array?} A bounding box argument: this is
       a bounding box given as an array in the format [minX, minY, maxX, maxY].
       Search results will be limited to the bounding box.
-  - `types` {String?} a comma seperated list of types that filter
+  - `types` {String?} A comma seperated list of types that filter
       results to match those specified. See <https://www.mapbox.com/developers/api/geocoding/#filter-type>
       for available types.
-  - `country` {String?} a comma separated list of country codes to
+  - `country` {String?} A comma separated list of country codes to
       limit results to specified country or countries.
   - `minLength` {Number} Minimum number of characters to enter before results are shown. (optional, default `2`)
   - `limit` {Number} Maximum number of results to show. (optional, default `5`)
