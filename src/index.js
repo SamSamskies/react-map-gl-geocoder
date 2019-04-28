@@ -1,4 +1,3 @@
-import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import { Component } from 'react'
 import PropTypes from 'prop-types'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'

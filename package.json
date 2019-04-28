@@ -4,7 +4,7 @@
   "description": "React wrapper for mapbox-gl-geocoder for use with react-map-gl",
   "main": "dist/index.js",
   "scripts": {
-    "build": "babel src --out-dir dist --source-maps inline",
+    "build": "babel src --out-dir dist --source-maps inline && cp node_modules/@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css dist/",
     "format": "prettier --write 'src/**/*.js'",
     "prepublish": "npm run build"
   },
