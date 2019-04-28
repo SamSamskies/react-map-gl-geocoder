@@ -12,7 +12,7 @@ function fitBounds(bounds, viewport) {
 
 class Geocoder extends Component {
   geocoder = null
-  cachedInputValue = ''
+  cachedResult = null
 
   componentDidMount() {
     this.initializeGeocoder()
@@ -33,38 +33,62 @@ class Geocoder extends Component {
     const {
       mapboxApiAccessToken,
       inputValue,
+      origin,
       zoom,
       placeholder,
       proximity,
       trackProximity,
+      collapsed,
+      clearAndBlurOnEsc,
+      clearOnBlur,
       bbox,
       types,
-      country,
+      countries,
       minLength,
       limit,
       language,
       filter,
       localGeocoder,
+      reverseGeocode,
+      enableEventLogging,
+      render,
+      getItemValue,
       onInit,
       position
     } = this.props
-
-    this.geocoder = new MapboxGeocoder({
+    const options = {
       accessToken: mapboxApiAccessToken,
+      origin,
       zoom,
       flyTo: false,
       placeholder,
       proximity,
       trackProximity,
+      collapsed,
+      clearAndBlurOnEsc,
+      clearOnBlur,
       bbox,
       types,
-      country,
+      countries,
       minLength,
       limit,
       language,
       filter,
-      localGeocoder
-    })
+      localGeocoder,
+      reverseGeocode,
+      enableEventLogging,
+      marker: false
+    }
+
+    if (render && typeof render === 'function') {
+      options.render = render
+    }
+
+    if (getItemValue && typeof getItemValue === 'function') {
+      options.getItemValue = getItemValue
+    }
+
+    this.geocoder = new MapboxGeocoder(options)
     this.subscribeEvents()
 
     if (containerNode) {
@@ -74,10 +98,17 @@ class Geocoder extends Component {
     }
 
     if (inputValue !== undefined && inputValue !== null) {
-      this.cachedInputValue = inputValue
+      this.geocoder.setInput(inputValue)
+    } else if (this.cachedResult) {
+      this.geocoder.setInput(this.cachedResult.place_name)
     }
 
-    this.geocoder.setInput(this.cachedInputValue)
+    if (this.cachedResult) {
+      this.geocoder._typeahead.selected = this.cachedResult
+    } else if (inputValue !== undefined && inputValue !== null) {
+      this.geocoder._typeahead.selected = {}
+    }
+
     onInit(this.geocoder)
   }
 
@@ -122,7 +153,7 @@ class Geocoder extends Component {
   }
 
   handleClear = () => {
-    this.cachedInputValue = ''
+    this.cachedResult = null
     this.props.onClear()
   }
 
@@ -176,9 +207,7 @@ class Geocoder extends Component {
     })
     onResult(event)
 
-    if (result && result.place_name) {
-      this.cachedInputValue = result.place_name
-    }
+    this.cachedResult = result
   }
 
   handleError = (event) => {
@@ -199,18 +228,26 @@ class Geocoder extends Component {
     onViewportChange: PropTypes.func,
     mapboxApiAccessToken: PropTypes.string.isRequired,
     inputValue: PropTypes.string,
+    origin: PropTypes.string,
     zoom: PropTypes.number,
     placeholder: PropTypes.string,
     proximity: PropTypes.object,
     trackProximity: PropTypes.bool,
+    collapsed: PropTypes.bool,
+    clearAndBlurOnEsc: PropTypes.bool,
+    clearOnBlur: PropTypes.bool,
     bbox: PropTypes.array,
     types: PropTypes.string,
-    country: PropTypes.string,
+    countries: PropTypes.string,
     minLength: PropTypes.number,
     limit: PropTypes.number,
     language: PropTypes.string,
     filter: PropTypes.func,
     localGeocoder: PropTypes.func,
+    reverseGeocode: PropTypes.bool,
+    enableEventLogging: PropTypes.bool,
+    render: PropTypes.func,
+    getItemValue: PropTypes.func,
     position: PropTypes.oneOf(VALID_POSITIONS),
     onInit: PropTypes.func,
     onClear: PropTypes.func,
@@ -222,11 +259,17 @@ class Geocoder extends Component {
 
   static defaultProps = {
     onViewportChange: () => {},
+    origin: 'https://api.mapbox.com',
     zoom: 16,
     placeholder: 'Search',
     trackProximity: false,
+    collapsed: false,
+    clearAndBlurOnEsc: false,
+    clearOnBlur: false,
     minLength: 2,
     limit: 5,
+    reverseGeocode: false,
+    enableEventLogging: true,
     position: 'top-right',
     onInit: () => {},
     onClear: () => {},

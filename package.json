@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/SamSamskies/react-map-gl-geocoder",
   "dependencies": {
-    "@mapbox/mapbox-gl-geocoder": "^2.3.0",
+    "@mapbox/mapbox-gl-geocoder": "4.1.2",
     "prop-types": "^15.6.2",
     "viewport-mercator-project": "6.1.1"
   },
