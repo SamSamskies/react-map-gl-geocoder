@@ -4,7 +4,7 @@
   "description": "React wrapper for mapbox-gl-geocoder for use with react-map-gl",
   "main": "dist/index.js",
   "scripts": {
-    "build": "babel src --out-dir dist --source-maps inline && cp node_modules/@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css dist/",
+    "build": "babel src --out-dir dist && cp node_modules/@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css dist/",
     "format": "prettier --write 'src/**/*.js'",
     "prepublish": "npm run build"
   },
@@ -40,7 +40,7 @@
   "homepage": "https://github.com/SamSamskies/react-map-gl-geocoder",
   "dependencies": {
     "@mapbox/mapbox-gl-geocoder": "4.1.2",
-    "prop-types": "^15.6.2",
+    "prop-types": "^15.7.2",
     "viewport-mercator-project": "6.1.1"
   },
   "peerDependencies": {
