@@ -1,6 +1,6 @@
 {
   "name": "react-map-gl-geocoder",
-  "version": "1.8.1",
+  "version": "2.0.0",
   "description": "React wrapper for mapbox-gl-geocoder for use with react-map-gl",
   "main": "dist/index.js",
   "scripts": {
