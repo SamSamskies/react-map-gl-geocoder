@@ -43,7 +43,7 @@ Only `mapRef` and `mapboxApiAccessToken` are required.
 | mapRef | Object | | Ref for react-map-gl map component.
 | containerRef | Object | | This can be used to place the geocoder outside of the map. The `position` prop is ignored if this is passed in. Example: https://codesandbox.io/s/v0m14q5rly
 | onViewportChange | Function | () => {} | Is passed updated viewport values after executing a query.
-| mapboxApiAccessToken | | | https://www.mapbox.com/
+| mapboxApiAccessToken | String | | https://www.mapbox.com/
 | inputValue | String | | Sets the search input value
 | origin | String | "https://api.mapbox.com" | Use to set a custom API origin.
 | zoom | Number | 16 | On geocoded result what zoom level should the map animate to when a `bbox` isn't found in the response. If a `bbox` is found the map will fit to the `bbox`.
