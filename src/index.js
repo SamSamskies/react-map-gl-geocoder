@@ -10,22 +10,6 @@ function fitBounds(bounds, viewport) {
   return new WebMercatorViewport(viewport).fitBounds(bounds)
 }
 
-function getAccessToken() {
-  let accessToken = null
-
-  if (typeof window !== 'undefined' && window.location) {
-    const match = window.location.search.match(/access_token=([^&/]*)/)
-    accessToken = match && match[1]
-  }
-
-  if (!accessToken && typeof process !== 'undefined') {
-    // Note: This depends on bundler plugins (e.g. webpack) inmporting environment correctly
-    accessToken = accessToken || process.env.MapboxAccessToken // eslint-disable-line
-  }
-
-  return accessToken || null
-}
-
 class Geocoder extends Component {
   geocoder = null
   cachedInputValue = ''
@@ -215,7 +199,7 @@ class Geocoder extends Component {
     mapRef: PropTypes.object.isRequired,
     containerRef: PropTypes.object,
     onViewportChange: PropTypes.func,
-    mapboxApiAccessToken: PropTypes.string,
+    mapboxApiAccessToken: PropTypes.string.isRequired,
     inputValue: PropTypes.string,
     zoom: PropTypes.number,
     placeholder: PropTypes.string,
@@ -241,7 +225,6 @@ class Geocoder extends Component {
 
   static defaultProps = {
     onViewportChange: () => {},
-    mapboxApiAccessToken: getAccessToken(),
     zoom: 16,
     placeholder: 'Search',
     trackProximity: false,
