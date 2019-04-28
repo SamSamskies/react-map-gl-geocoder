@@ -45,7 +45,6 @@ class Geocoder extends Component {
       language,
       filter,
       localGeocoder,
-      options,
       onInit,
       position
     } = this.props
@@ -64,8 +63,7 @@ class Geocoder extends Component {
       limit,
       language,
       filter,
-      localGeocoder,
-      ...options
+      localGeocoder
     })
     this.subscribeEvents()
 
@@ -219,8 +217,7 @@ class Geocoder extends Component {
     onLoading: PropTypes.func,
     onResults: PropTypes.func,
     onResult: PropTypes.func,
-    onError: PropTypes.func,
-    options: PropTypes.object // deprecated and will be removed in v2
+    onError: PropTypes.func
   }
 
   static defaultProps = {
