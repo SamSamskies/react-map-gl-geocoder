@@ -103,10 +103,9 @@ class Geocoder extends Component {
       this.geocoder.setInput(this.cachedResult.place_name)
     }
 
-    if (this.cachedResult) {
-      this.geocoder._typeahead.selected = this.cachedResult
-    } else if (inputValue !== undefined && inputValue !== null) {
-      this.geocoder._typeahead.selected = {}
+    if (this.cachedResult || (inputValue !== undefined && inputValue !== null)) {
+      // this is a hack to force clear icon to show if there is text in the input
+      this.geocoder._clearEl.style.display = 'block'
     }
 
     onInit(this.geocoder)
@@ -208,6 +207,7 @@ class Geocoder extends Component {
     onResult(event)
 
     this.cachedResult = result
+    this.geocoder._typeahead.selected = null
   }
 
   handleError = (event) => {
