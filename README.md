@@ -8,6 +8,8 @@ React wrapper for mapbox-gl-geocoder for use with react-map-gl.
 ## Demo
 https://codesandbox.io/s/l7p179qr6m
 
+> Known issue: For some people an error occurs when searching for some places as discussed [here](https://github.com/SamSamskies/react-map-gl-geocoder/issues/28). This can be resolved by removing the height and width props from the Map component and placing them in the state object fed to it.
+
 ## Installation
 NPM
 ```
