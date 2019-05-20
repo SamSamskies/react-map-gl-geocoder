@@ -191,10 +191,15 @@ class Geocoder extends Component {
     const height = mapRef.current.props.height
     let zoom = this.geocoder.options.zoom
 
-    if (!bboxExceptions[id] && bbox) {
-      zoom = fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], { width, height }).zoom
-    } else if (bboxExceptions[id]) {
-      zoom = fitBounds(bboxExceptions[id].bbox, { width, height }).zoom
+    try {
+      if (!bboxExceptions[id] && bbox) {
+        zoom = fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], { width, height }).zoom
+      } else if (bboxExceptions[id]) {
+        zoom = fitBounds(bboxExceptions[id].bbox, { width, height }).zoom
+      }
+    } catch (e) {
+      console.warn('following result caused an error when trying to zoom to bbox: ', result) // eslint-disable-line
+      zoom = this.geocoder.options.zoom
     }
 
     onViewportChange({
