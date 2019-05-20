@@ -163,7 +163,8 @@ class Geocoder extends Component {
   handleResult = (event) => {
     const { result } = event
     const { mapRef, onViewportChange, onResult } = this.props
-    const { id, bbox, center } = result
+    const { bbox, center, properties = {} } = result
+    const { short_code } = properties
     const [longitude, latitude] = center
     const bboxExceptions = {
       fr: {
@@ -189,10 +190,10 @@ class Geocoder extends Component {
     const fitBounds = (bounds, viewport) => new WebMercatorViewport(viewport).fitBounds(bounds)
 
     try {
-      if (!bboxExceptions[id] && bbox) {
+      if (!bboxExceptions[short_code] && bbox) {
         zoom = fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], { width, height }).zoom
-      } else if (bboxExceptions[id]) {
-        zoom = fitBounds(bboxExceptions[id].bbox, { width, height }).zoom
+      } else if (bboxExceptions[short_code]) {
+        zoom = fitBounds(bboxExceptions[short_code].bbox, { width, height }).zoom
       }
     } catch (e) {
       console.warn('following result caused an error when trying to zoom to bbox: ', result) // eslint-disable-line
