@@ -6,10 +6,6 @@ import WebMercatorViewport from 'viewport-mercator-project'
 
 const VALID_POSITIONS = ['top-left', 'top-right', 'bottom-left', 'bottom-right']
 
-function fitBounds(bounds, viewport) {
-  return new WebMercatorViewport(viewport).fitBounds(bounds)
-}
-
 class Geocoder extends Component {
   geocoder = null
   cachedResult = null
@@ -170,19 +166,19 @@ class Geocoder extends Component {
     const { id, bbox, center } = result
     const [longitude, latitude] = center
     const bboxExceptions = {
-      'country.3148': {
+      fr: {
         name: 'France',
         bbox: [[-4.59235, 41.380007], [9.560016, 51.148506]]
       },
-      'country.3145': {
+      us: {
         name: 'United States',
         bbox: [[-171.791111, 18.91619], [-66.96466, 71.357764]]
       },
-      'country.330': {
+      ru: {
         name: 'Russia',
         bbox: [[19.66064, 41.151416], [190.10042, 81.2504]]
       },
-      'country.3179': {
+      ca: {
         name: 'Canada',
         bbox: [[-140.99778, 41.675105], [-52.648099, 83.23324]]
       }
@@ -190,6 +186,7 @@ class Geocoder extends Component {
     const width = mapRef.current.props.width
     const height = mapRef.current.props.height
     let zoom = this.geocoder.options.zoom
+    const fitBounds = (bounds, viewport) => new WebMercatorViewport(viewport).fitBounds(bounds)
 
     try {
       if (!bboxExceptions[id] && bbox) {
