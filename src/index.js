@@ -162,7 +162,7 @@ class Geocoder extends Component {
 
   handleResult = (event) => {
     const { result } = event
-    const { mapRef, onViewportChange, onResult } = this.props
+    const { onViewportChange, onResult } = this.props
     const { bbox, center, properties = {} } = result
     const { short_code } = properties
     const [longitude, latitude] = center
@@ -184,8 +184,9 @@ class Geocoder extends Component {
         bbox: [[-140.99778, 41.675105], [-52.648099, 83.23324]]
       }
     }
-    const width = mapRef.current.props.width
-    const height = mapRef.current.props.height
+    const { width, height } = this.getMapboxMap()
+      .getContainer()
+      .getBoundingClientRect()
     let zoom = this.geocoder.options.zoom
     const fitBounds = (bounds, viewport) => new WebMercatorViewport(viewport).fitBounds(bounds)
 
