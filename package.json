@@ -50,6 +50,7 @@
     "react-map-gl": ">= 4.0.0"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
     "eslint": "^5.11.0",
     "eslint-plugin-react": "^7.11.1",
     "husky": "^1.2.1",
