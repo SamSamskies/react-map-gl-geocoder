@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import { FlyToInterpolator } from 'react-map-gl'
@@ -6,7 +6,7 @@ import WebMercatorViewport from 'viewport-mercator-project'
 
 const VALID_POSITIONS = ['top-left', 'top-right', 'bottom-left', 'bottom-right']
 
-class Geocoder extends Component {
+class Geocoder extends PureComponent {
   geocoder = null
   cachedResult = null
 
@@ -100,11 +100,15 @@ class Geocoder extends Component {
     }
 
     if (this.cachedResult || (inputValue !== undefined && inputValue !== null)) {
-      // this is a hack to force clear icon to show if there is text in the input
-      this.geocoder._clearEl.style.display = 'block'
+      this.showClearIcon()
     }
 
     onInit(this.geocoder)
+  }
+
+  showClearIcon = () => {
+    // this is a hack to force clear icon to show if there is text in the input
+    this.geocoder._clearEl.style.display = 'block'
   }
 
   getMapboxMap = () => {
@@ -212,6 +216,7 @@ class Geocoder extends Component {
 
     this.cachedResult = result
     this.geocoder._typeahead.selected = null
+    this.showClearIcon()
   }
 
   handleError = (event) => {
