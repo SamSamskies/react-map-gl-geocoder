@@ -104,8 +104,6 @@ const MAPBOX_TOKEN = getAccessToken()
 class Example extends Component {
   state = {
     viewport: {
-      width: 400,
-      height: 400,
       latitude: 37.7577,
       longitude: -122.4376,
       zoom: 8
@@ -113,22 +111,6 @@ class Example extends Component {
   }
 
   mapRef = React.createRef()
-
-  componentDidMount() {
-    window.addEventListener('resize', this.resize)
-    this.resize()
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.resize)
-  }
-
-  resize = () => {
-    this.handleViewportChange({
-      width: window.innerWidth,
-      height: window.innerHeight
-    })
-  }
 
   handleViewportChange = (viewport) => {
     this.setState({
@@ -151,6 +133,8 @@ class Example extends Component {
       <MapGL
         ref={this.mapRef}
         {...this.state.viewport}
+        width="100%"
+        height="100%"
         onViewportChange={this.handleViewportChange}
         mapboxApiAccessToken={MAPBOX_TOKEN}>
         <Geocoder
