@@ -9,7 +9,7 @@
   "scripts": {
     "build": "microbundle --external react,events && cp node_modules/@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css dist/",
     "format": "prettier --write 'src/**/*.js'",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "husky": {
     "hooks": {
