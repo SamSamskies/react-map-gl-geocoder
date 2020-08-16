@@ -8,6 +8,7 @@
   "unpkg": "dist/index.umd.js",
   "scripts": {
     "build": "microbundle build && npm run cp:css",
+    "watch": "microbundle watch && npm run cp:css",
     "cp:css": "cp node_modules/@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css dist/",
     "format": "prettier --write 'src/**/*.js'",
     "prepublishOnly": "npm run build"
