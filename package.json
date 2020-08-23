@@ -1,6 +1,6 @@
 {
   "name": "react-map-gl-geocoder",
-  "version": "2.0.13",
+  "version": "2.0.14",
   "description": "React wrapper for mapbox-gl-geocoder for use with react-map-gl",
   "source": "src/index.js",
   "main": "dist/index.js",
@@ -44,7 +44,7 @@
   },
   "homepage": "https://github.com/SamSamskies/react-map-gl-geocoder",
   "dependencies": {
-    "@mapbox/mapbox-gl-geocoder": "4.2.0",
+    "@mapbox/mapbox-gl-geocoder": "4.7.0",
     "prop-types": "^15.7.2",
     "viewport-mercator-project": "6.1.1"
   },
