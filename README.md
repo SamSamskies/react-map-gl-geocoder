@@ -5,8 +5,9 @@ React wrapper for mapbox-gl-geocoder for use with react-map-gl.
 [![NPM](https://img.shields.io/npm/v/react-map-gl-geocoder.svg)](https://www.npmjs.com/package/react-map-gl-geocoder)
 
 
-## Demo
-https://codesandbox.io/s/l7p179qr6m
+## Demos
+* Simple Example - https://codesandbox.io/s/l7p179qr6m
+* Ignore Map Events Example - https://codesandbox.io/s/react-map-gl-geocoder-using-containerref-to-ignore-events-rewdh
 
 ## Installation
 npm
@@ -74,7 +75,9 @@ Only `mapRef` and `mapboxApiAccessToken` are required.
   
   
   
-## Example
+## Examples
+
+### Simple Example
 ```js
 import 'mapbox-gl/dist/mapbox-gl.css'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
@@ -107,7 +110,7 @@ const Example = () => {
         ...geocoderDefaultOverrides
       });
     },
-    [handleViewportChange]
+    []
   );
 
   return (
@@ -132,7 +135,58 @@ const Example = () => {
 };
 
 export default Example
+```
 
+### Ignore Map Events Example
+You can use the `containerRef` prop to place the `Geocoder` component outside of the `MapGL` component to avoid propagating the mouse events to the `MapGL` component. You can use CSS to position it over the map as shown in this example.
+```js
+import 'mapbox-gl/dist/mapbox-gl.css'
+import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
+import React, { useState, useRef, useCallback } from 'react'
+import MapGL from 'react-map-gl'
+import Geocoder from 'react-map-gl-geocoder'
+
+// Ways to set Mapbox token: https://uber.github.io/react-map-gl/#/Documentation/getting-started/about-mapbox-tokens
+const MAPBOX_TOKEN = 'REPLACE_WITH_YOUR_MAPBOX_TOKEN'
+
+const Example = () => {
+  const [viewport, setViewport] = useState({
+    latitude: 37.7577,
+    longitude: -122.4376,
+    zoom: 8,
+  });
+  const geocoderContainerRef = useRef();
+  const mapRef = useRef();
+  const handleViewportChange = useCallback(
+    (newViewport) => setViewport(newViewport),
+    []
+  );
+
+  return (
+    <div style={{ height: "100vh" }}>
+      <div
+        ref={geocoderContainerRef}
+        style={{ position: "absolute", top: 20, left: 20, zIndex: 1 }}
+      />
+      <MapGL
+        ref={mapRef}
+        {...viewport}
+        width="100%"
+        height="100%"
+        onViewportChange={handleViewportChange}
+        mapboxApiAccessToken={MAPBOX_TOKEN}
+      >
+        <Geocoder
+          mapRef={mapRef}
+          containerRef={geocoderContainerRef}
+          onViewportChange={handleViewportChange}
+          mapboxApiAccessToken={MAPBOX_TOKEN}
+          position="top-left"
+        />
+      </MapGL>
+    </div>
+  );
+};
 ```
 
 ![react-map-gl-geocoder example screenshot](react-map-gl-geocoder-screenshot.png)
