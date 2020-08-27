@@ -189,4 +189,5 @@ const Example = () => {
 };
 ```
 
+### Sample Screenshot
 ![react-map-gl-geocoder example screenshot](react-map-gl-geocoder-screenshot.png)
