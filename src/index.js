@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import { FlyToInterpolator } from 'react-map-gl'
 import WebMercatorViewport from 'viewport-mercator-project'
+import mapboxgl from 'mapbox-gl'
 
 const VALID_POSITIONS = ['top-left', 'top-right', 'bottom-left', 'bottom-right']
 
@@ -47,6 +48,7 @@ class Geocoder extends PureComponent {
       localGeocoder,
       reverseGeocode,
       enableEventLogging,
+      marker,
       render,
       getItemValue,
       onInit,
@@ -73,7 +75,8 @@ class Geocoder extends PureComponent {
       localGeocoder,
       reverseGeocode,
       enableEventLogging,
-      marker: false
+      marker,
+      mapboxgl
     }
 
     if (render && typeof render === 'function') {
@@ -255,6 +258,7 @@ class Geocoder extends PureComponent {
     localGeocoder: PropTypes.func,
     reverseGeocode: PropTypes.bool,
     enableEventLogging: PropTypes.bool,
+    marker: PropTypes.bool,
     render: PropTypes.func,
     getItemValue: PropTypes.func,
     position: PropTypes.oneOf(VALID_POSITIONS),
@@ -279,6 +283,7 @@ class Geocoder extends PureComponent {
     limit: 5,
     reverseGeocode: false,
     enableEventLogging: true,
+    marker: true,
     position: 'top-right',
     onInit: () => {},
     onClear: () => {},

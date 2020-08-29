@@ -64,6 +64,7 @@ Only `mapRef` and `mapboxApiAccessToken` are required.
 | localGeocoder | Function | | A function accepting the query string which performs local geocoding to supplement results from the Mapbox Geocoding API. Expected to return an Array of GeoJSON Features in the [Carmen GeoJSON](https://github.com/mapbox/carmen/blob/master/carmen-geojson.md) format.
 | reverseGeocode | Boolean | false | Enable reverse geocoding. Defaults to false. Expects coordinates to be lat, lon.
 | enableEventLogging | Boolean | true | Allow Mapbox to collect anonymous usage statistics from the plugin.
+| marker | Boolean or Object | true | If true, a Marker will be added to the map at the location of the user-selected result using a default set of Marker options. If the value is an object, the marker will be constructed using these options. If false, no marker will be added to the map.
 | render | Function | | A function that specifies how the results should be rendered in the dropdown menu. Accepts a single Carmen GeoJSON object as input and return a string. Any html in the returned string will be rendered. Uses mapbox-gl-geocoder's default rendering if no function provided.  
 | position | String | "top-right" | Position on the map to which the geocoder control will be added. Valid values are `"top-left"`, `"top-right"`, `"bottom-left"`, and `"bottom-right"`.
 | onInit | Function | () => {} | Is passed Mapbox geocoder instance as param and is executed after Mapbox geocoder is initialized.
