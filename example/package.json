@@ -5,6 +5,7 @@
   "keywords": [],
   "main": "src/index.js",
   "devDependencies": {
+    "cypress": "^5.1.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-map-gl": "5.2.3",
@@ -12,7 +13,8 @@
     "react-scripts": "^3.4.3"
   },
   "scripts": {
-    "start": "react-scripts start"
+    "start": "react-scripts start",
+    "test": "cypress open"
   },
   "browserslist": {
     "production": [

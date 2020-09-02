@@ -1,6 +1,6 @@
 {
   "name": "react-map-gl-geocoder",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "React wrapper for mapbox-gl-geocoder for use with react-map-gl",
   "source": "src/index.js",
   "main": "dist/index.js",
@@ -54,6 +54,7 @@
   "devDependencies": {
     "babel-eslint": "^10.0.1",
     "eslint": "^6.2.2",
+    "eslint-plugin-cypress": "^2.11.1",
     "eslint-plugin-react": "^7.11.1",
     "husky": "^1.2.1",
     "lint-staged": "^9.2.5",
