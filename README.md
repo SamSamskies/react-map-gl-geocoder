@@ -2,7 +2,7 @@
 
 React wrapper for mapbox-gl-geocoder for use with react-map-gl.
 
-[![NPM](https://img.shields.io/npm/v/react-map-gl-geocoder.svg)](https://www.npmjs.com/package/react-map-gl-geocoder)
+[![NPM](https://img.shields.io/npm/v/react-map-gl-geocoder.svg)](https://www.npmjs.com/package/react-map-gl-geocoder) [![react-map-gl-geocoder](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/etguoj/master&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/etguoj/runs)
 
 
 ## Demos
