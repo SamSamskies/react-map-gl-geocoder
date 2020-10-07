@@ -39,7 +39,7 @@ Link tag in header:
 ## Props
 Only `mapRef` and `mapboxApiAccessToken` are required. 
 
-All non-primitive prop values should be memoized.
+All non-primitive prop values besides `mapRef` and `containerRef` should be memoized.
 
 | Name | Type | Default | Description |
 |--- | --- | --- | --- |
