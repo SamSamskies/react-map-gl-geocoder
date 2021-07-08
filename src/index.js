@@ -258,7 +258,7 @@ class Geocoder extends PureComponent {
     localGeocoder: PropTypes.func,
     reverseGeocode: PropTypes.bool,
     enableEventLogging: PropTypes.bool,
-    marker: PropTypes.bool,
+    marker: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
     render: PropTypes.func,
     getItemValue: PropTypes.func,
     position: PropTypes.oneOf(VALID_POSITIONS),
