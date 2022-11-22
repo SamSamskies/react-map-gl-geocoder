@@ -10,7 +10,7 @@
     "react-dom": "16.13.1",
     "react-map-gl": "5.2.3",
     "react-map-gl-geocoder": "file:../",
-    "react-scripts": "^3.4.3"
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
